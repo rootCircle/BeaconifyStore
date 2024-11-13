@@ -4,11 +4,17 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "push": "drizzle-kit generate && drizzle-kit migrate",
-    "test": "jest"
+    "test": "jest",
+    "precommit": "tsc && git add dist",
+    "prepare": "husky"
   },
+  "engines": {
+    "node": ">=18.x"
+  },
+  "packageManager": "pnpm@9.0.0",
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -24,6 +30,7 @@
     "@types/node": "^22.9.0",
     "@types/pg": "^8.11.10",
     "drizzle-kit": "^0.28.0",
+    "husky": "^9.1.6",
     "pg": "^8.13.1",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
