@@ -69,5 +69,36 @@ class BeaconService {
             };
         }
     }
+    async deactivateBeacon(beaconData) {
+        // Leaky abstraction for allowing latitude and longitude to be passed
+        const validation = validators_1.BeaconValidator.validateBeacon({
+            ...beaconData,
+            latitude: 0,
+            longitude: 0,
+        });
+        if (!validation.isValid) {
+            return { success: false, message: validation.message };
+        }
+        try {
+            // Check for existing beacon
+            const existing = await this.db
+                .select()
+                .from(schema_1.vBeacons)
+                .where((0, drizzle_orm_1.and)((0, drizzle_orm_1.eq)(schema_1.vBeacons.uuid, beaconData.uuid.toLowerCase()), (0, drizzle_orm_1.eq)(schema_1.vBeacons.major, beaconData.major), (0, drizzle_orm_1.eq)(schema_1.vBeacons.minor, beaconData.minor)));
+            if (existing.length === 0) {
+                return { success: false, message: 'Beacon not found' };
+            }
+            // Deactivate beacon
+            await this.db
+                .update(schema_1.vBeacons)
+                .set({ isActive: false })
+                .where((0, drizzle_orm_1.and)((0, drizzle_orm_1.eq)(schema_1.vBeacons.uuid, beaconData.uuid.toLowerCase()), (0, drizzle_orm_1.eq)(schema_1.vBeacons.major, beaconData.major), (0, drizzle_orm_1.eq)(schema_1.vBeacons.minor, beaconData.minor)));
+            return { success: true, message: 'Beacon deactivated successfully' };
+        }
+        catch (error) {
+            console.error('Error in deactivateBeacon:', error);
+            return { success: false, message: 'Internal server error' };
+        }
+    }
 }
 exports.BeaconService = BeaconService;

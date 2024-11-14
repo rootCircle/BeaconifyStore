@@ -1,5 +1,5 @@
 {
-  "id": "7cc37d44-104e-4812-949c-ac6cdae59a79",
+  "id": "358d448c-ab7f-4436-a75b-ec685a6495db",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -8,12 +8,6 @@
       "name": "virtual_beacons",
       "schema": "",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
         "uuid": {
           "name": "uuid",
           "type": "varchar(36)",
@@ -61,7 +55,16 @@
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "virtual_beacons_uuid_major_minor_pk": {
+          "name": "virtual_beacons_uuid_major_minor_pk",
+          "columns": [
+            "uuid",
+            "major",
+            "minor"
+          ]
+        }
+      },
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},

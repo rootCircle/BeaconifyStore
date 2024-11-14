@@ -15,5 +15,10 @@ export function createBeaconRouter(beaconService: BeaconService) {
     res.json(result);
   });
 
+  router.post('/deactivateVBeacon', async (req, res) => {
+    const result = await beaconService.deactivateBeacon(req.body);
+    res.json(result);
+  });
+
   return router;
 }

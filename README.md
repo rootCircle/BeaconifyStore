@@ -59,14 +59,14 @@ pnpm run push
 ### Development Mode
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 ### Production Mode
 
 ```bash
-npm run build
-npm start
+pnpm run build
+pnpm start
 ```
 
 ## API Documentation
@@ -138,6 +138,41 @@ curl -X POST http://localhost:3000/api/pollVBeacons \
 
 ```bash
 curl http://localhost:3000/api/getAllVBeacons
+```
+
+### Deactivate a beacon
+
+- **Endpoint**: `POST /api/deactivateVBeacon`
+- **Content-Type**: `application/json`
+- **Request Body**:
+
+```json
+{
+  "uuid": "550e8400-e29b-41d4-a716-446655440000",
+  "major": "1234",
+  "minor": "5678"
+}
+```
+
+- **Invocation**:
+
+```bash
+curl -X POST http://localhost:3000/api/deactivateVBeacon \
+  -H "Content-Type: application/json" \
+  -d '{
+    "uuid": "550e8400-e29b-41d4-a716-446655440000",
+    "major": "1234",
+    "minor": "5678",
+  }'
+```
+
+- **Response**:
+
+```json
+{
+  "success": true,
+  "message": "Beacon deactivated successfully",
+}
 ```
 
 ## Error Handling
